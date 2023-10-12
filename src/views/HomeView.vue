@@ -1,18 +1,28 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <h1>this is main page</h1>
+    <ul>
+      <li v-for="product in productsModule.products" :key="product.id">
+        {{ product.title }}
+      </li>
+    </ul>
+    <button @click="getProducts">get products</button>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
-
+import { mapState, mapMutations, mapActions } from "vuex";
 export default {
-  name: "HomeView",
-  components: {
-    HelloWorld,
+  computed: {
+    ...mapState(["productsModule"]),
+  },
+
+  methods: {
+    ...mapMutations(["getProducts"]),
+    ...mapActions(["doGetProducts"]),
+    async getProducts() {
+      await this.doGetProducts();
+    },
   },
 };
 </script>
